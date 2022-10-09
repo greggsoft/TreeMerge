@@ -1,15 +1,7 @@
 
-import { _decorator, Component, Node, log } from 'cc';
+import { _decorator, Component, Node, log, randomRangeInt } from 'cc';
+import { MergeObjectType } from '../classes/MergeObjectType';
 const { ccclass, property } = _decorator;
-
-@ccclass('MergeObjectType')
-class MergeObjectType {
-    @property
-    type = ''
-
-    @property({type: [Node]})
-    levels = []
-}
 
 /**
  * Predefined variables
@@ -37,10 +29,10 @@ export class MergeObject extends Component {
 
         if (nextType) {
             if (currentLevelNode) {
-                currentLevelNode.enabled = false
+                currentLevelNode.active = false
             }
             if (newLevelNode) {
-                newLevelNode.enabled = true
+                newLevelNode.active = true
             }
             this._type = newTypeName
         }
@@ -73,11 +65,19 @@ export class MergeObject extends Component {
     @property
     private _level = 1
 
-    @property
-    types: [MergeObjectType] 
+    @property({
+        type: [MergeObjectType]
+    })
+    types = [] as MergeObjectType[]
 
     start () {
-        // [3]
+       let types = this.types.map(({type}) => type)
+       let randomTypeIndex = randomRangeInt(0, types.length)
+       let randomType = types[randomTypeIndex]
+
+       log('merge object selected type ' + randomType)
+       this.type = randomType
+       this.level = 1
     }
 
     // update (deltaTime: number) {
