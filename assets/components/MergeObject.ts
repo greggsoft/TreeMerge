@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, Node, log } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('MergeObjectType')
@@ -60,11 +60,11 @@ export class MergeObject extends Component {
         let newLevelNode = type?.levels[newLevel - 1]
 
         if (currentLevelNode) {
-            currentLevelNode.enabled = false
+            currentLevelNode.active = false
         }
 
         if (newLevelNode) {
-            newLevelNode.enabled = true
+            newLevelNode.active = true
         }
 
         this._level = newLevel
@@ -73,8 +73,8 @@ export class MergeObject extends Component {
     @property
     private _level = 1
 
-    @property()
-    types: [MergeObjectType]
+    @property
+    types: [MergeObjectType] 
 
     start () {
         // [3]
