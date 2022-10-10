@@ -1,6 +1,6 @@
 
 import { _decorator, Component, Node, input, Input, EventTouch, EventMouse, log } from 'cc';
-const { ccclass, property } = _decorator;
+const { ccclass } = _decorator;
 
 /**
  * Predefined variables
@@ -16,17 +16,18 @@ const { ccclass, property } = _decorator;
  
 @ccclass('Movable')
 export class Movable extends Component {
-    // [1]
-    // dummy = '';
-
-    // [2]
-    // @property
-    // serializableDummy = 0;
-
     start () {
         let node = this.node
 
+        node.on(Node.EventType.TOUCH_START, this.onTouchStart, this)
         node.on(Node.EventType.TOUCH_MOVE, this.onToucnMove, this)
+    }
+
+    onTouchStart() {
+        let node = this.node
+        let parent = node.parent
+        parent.removeChild(node)
+        parent.addChild(node)
     }
 
     onToucnMove(event: EventTouch) {
@@ -37,14 +38,3 @@ export class Movable extends Component {
         this.node.setPosition(pos.x + deltaX, pos.y + deltaY)
     }
 }
-
-/**
- * [1] Class member could be defined like this.
- * [2] Use `property` decorator if your want the member to be serializable.
- * [3] Your initialization goes here.
- * [4] Your update function goes here.
- *
- * Learn more about scripting: https://docs.cocos.com/creator/3.4/manual/en/scripting/
- * Learn more about CCClass: https://docs.cocos.com/creator/3.4/manual/en/scripting/ccclass.html
- * Learn more about life-cycle callbacks: https://docs.cocos.com/creator/3.4/manual/en/scripting/life-cycle-callbacks.html
- */

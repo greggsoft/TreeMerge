@@ -51,14 +51,16 @@ export class MergeObject extends Component {
         let currentLevelNode = type?.levels[this._level - 1]
         let newLevelNode = type?.levels[newLevel - 1]
 
+        if (!newLevelNode) {
+            return;
+        }
+
         if (currentLevelNode) {
             currentLevelNode.active = false
         }
 
-        if (newLevelNode) {
-            newLevelNode.active = true
-        }
-
+        newLevelNode.active = true
+        
         this._level = newLevel
     }
 
@@ -80,19 +82,7 @@ export class MergeObject extends Component {
        this.level = 1
     }
 
-    // update (deltaTime: number) {
-    //     // [4]
-    // }
+    equals(obj: MergeObject): boolean {
+        return this.type == obj.type && this.level === obj.level
+    }
 }
-
-/**
- * [1] Class member could be defined like this.
- * [2] Use `property` decorator if your want the member to be serializable.
- * [3] Your initialization goes here.
- * [4] Your update function goes here.
- *
- * Learn more about scripting: https://docs.cocos.com/creator/3.4/manual/en/scripting/
- * Learn more about CCClass: https://docs.cocos.com/creator/3.4/manual/en/scripting/ccclass.html
- * Learn more about life-cycle callbacks: https://docs.cocos.com/creator/3.4/manual/en/scripting/life-cycle-callbacks.html
- */
-
