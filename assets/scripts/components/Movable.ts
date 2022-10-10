@@ -31,8 +31,9 @@ export class Movable extends Component {
     }
 
     onToucnMove(event: EventTouch) {
-        let deltaX = event.getDeltaX()
-        let deltaY = event.getDeltaY()
+        let delta = event.getUIDelta()
+        let deltaX = delta.x
+        let deltaY = delta.y
         let pos = this.node.getPosition()
 
         this.node.setPosition(pos.x + deltaX, pos.y + deltaY)
